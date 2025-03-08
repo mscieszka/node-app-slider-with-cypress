@@ -16,3 +16,26 @@ describe('Swiper Gallery Test', function () {
     cy.get('.swiper-slide-active').should('contain', 'Paris');
   });
 });
+
+describe('Swiper Gallery Loop Test', function () {
+  it('Checks the loop functionality.', function () {
+    cy.visit('http://localhost:3000');
+
+    // Navigate to the last slide
+    cy.get('.swiper-button-next').click();
+    cy.wait(1000);
+    cy.get('.swiper-button-next').click();
+    cy.wait(1000);
+    cy.get('.swiper-slide-active .card-description h1').should('contain', 'Paris');
+
+    // Expected loop back to first slide
+    cy.get('.swiper-button-next').click();
+    cy.wait(1000);
+    cy.get('.swiper-slide-active .card-description h1').should('contain', 'Rome');
+
+    // Test loop in the other direction
+    cy.get('.swiper-button-prev').click();
+    cy.wait(1000);
+    cy.get('.swiper-slide-active .card-description h1').should('contain', 'Paris');
+  });
+});
